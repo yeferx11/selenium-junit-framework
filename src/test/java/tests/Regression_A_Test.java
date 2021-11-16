@@ -6,9 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
 import pages.BasePage;
-import pages.HomePage;
 import utils.DataTable;
 import utils.Driver;
 import utils.ResultTables;
@@ -73,9 +71,7 @@ public class Regression_A_Test extends BaseTest {
 			BasePage basePage = new BasePage(driver, report);
 			basePage.goToHomePage();
 
-			HomePage home = new HomePage(driver, report);
-			home.displayStoreCategory("mens");
-			home.writeInTheSearchBox(testParameter);
+			
 
 			/* * * FIN DE PRUEBA * * */
 			// TODO determinar el estado verdadero del test con algun metodo del reporte

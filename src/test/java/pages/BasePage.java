@@ -26,19 +26,7 @@ public class BasePage {
 	protected static WebDriverWait wait_10s;
 	protected static WebDriverWait wait_5s;
 	protected static WebDriverWait wait_2s;
-	private static final String fs = File.separator;
 
-	@FindBy(xpath = "//div[@id='invalidCertMsg']/following-sibling::div/a")
-	private WebElement weBitdefender;
-
-	@FindBy(xpath = "//div[@id='main-message']")
-	private WebElement weconfiguration;
-
-	@FindBy(xpath = "//button[@id='details-button']")
-	private WebElement weBconfig;
-
-	@FindBy(xpath = "//a[@id='proceed-link']")
-	private WebElement weSLink;
 
 	public BasePage(WebDriver driver, Report report) {
 		this.driver = driver;
@@ -54,11 +42,7 @@ public class BasePage {
 	public void goToHomePage() throws Throwable {
 		try {
 
-			String url = System.getProperty("user.dir") + fs + "src" + fs + "test" + fs + "resources" + fs
-					+ "practicePage" + fs + "index.html";
-			System.out.println(url);
-			driver.navigate().to("file://" + url);
-			// driver.get("https://www.google.com/");
+			driver.get("https://auth-panama-sandbox.qvantel.systems/auth/realms/qvantel/protocol/openid-connect/auth?ui_locales=en&scope=openid&response_type=code&redirect_uri=https%3A%2F%2Fsct-panama-sandbox.qvantel.systems%3A443%2Foauth2%2Fcallback&state=ca833e5a-df2e-4b1e-9652-e40afa74da7f%7C%2F&client_id=sales-and-care-toolbox");
 			report.testPass("Se ingresa a la pagina de inicio", "goToHomePage", true);
 		} catch (Throwable t) {
 
@@ -66,107 +50,16 @@ public class BasePage {
 			throw t;
 		}
 	}
+public void Login(String menuname) throws Throwable {
 
-	@SuppressWarnings("unused")
-	private void openConfiguration() throws Exception {
 		try {
-			boolean result = weconfiguration.isDisplayed();
-			if (result == true) {
-				weBconfig.click();
-				weSLink.click();
-			}
+			driver.findElement(By.xpath("//input[@id='kc-login']")).click();
+			Thread.sleep(1000);
+			report.testPass("Se hace click en la seccion " +  false);
 		} catch (Throwable t) {
-			// De no mostrarse bloqueada, debe continuar con normalidad.
-		}
-	}
 
-	@SuppressWarnings("unused")
-	private void closeBitdefenderWindow() throws Exception {
-		try {
-			weBitdefender.click();
-		} catch (Throwable t) {
-			// De no mostrarse la pantalla del firewall, continuar con normalidad.
-		}
-	}
-
-	protected void setElementToAbsolute(String xpath) throws InterruptedException {
-		WebElement element = wait_10s.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].setAttribute('style', 'position:absolute')", element);
-	}
-
-	protected void setHeaderPositionAbsolute(String headerXpath) throws InterruptedException {
-		WebElement header = wait_10s.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(headerXpath)));
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].setAttribute('style', 'position:absolute')", header);
-	}
-
-	protected void setHeaderPositionStatic(String headerXpath) throws InterruptedException {
-		WebElement header = wait_10s.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(headerXpath)));
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].setAttribute('style', 'position:static')", header);
-	}
-
-	protected void scrollTo(int x, int y) throws InterruptedException {
-		JavascriptExecutor javaScriptExecutor = (JavascriptExecutor) driver;
-		String javaScript = "window.scrollTo(" + String.valueOf(x) + ", " + String.valueOf(y) + "); ";
-		javaScriptExecutor.executeScript(javaScript);
-		Thread.sleep(2000);
-	}
-
-	protected void scrollToWebElement(WebElement element) throws InterruptedException {
-		JavascriptExecutor javaScriptExecutor = (JavascriptExecutor) driver;
-		String scrollElementIntoMiddle = "var viewPortHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);"
-				+ "var elementTop = arguments[0].getBoundingClientRect().top;"
-				+ "window.scrollBy(0, elementTop-(viewPortHeight/2));";
-		javaScriptExecutor.executeScript(scrollElementIntoMiddle, element);
-	}
-
-	protected boolean existsElement(String xpath) {
-		try {
-			driver.findElement(By.xpath(xpath));
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
-
-	protected boolean existsElement(WebElement WebElement) {
-		try {
-			WebElement.isDisplayed();
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-	}
-
-	protected boolean elementIsVisible(WebElement WebElement) {
-		try {
-			wait_5s.until(ExpectedConditions.visibilityOf(WebElement));
-		} catch (Exception e) {
-			System.out.println("El elemento no es visible");
-			return false;
-		}
-		return true;
-	}
-
-	protected boolean elementIsVisible(String xpath) {
-		try {
-			wait_5s.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(xpath)));
-		} catch (Exception e) {
-			System.out.println("El elemento no es visible");
-			return false;
-		}
-		return true;
-	}
-
-	public String getCurrentUrl() {
-		try {
-			String url = driver.getCurrentUrl();
-			return url;
-		} catch (Exception e) {
-			// do nothing
-			return null;
+			report.testFail("fallo al hacer click en ");
+			throw t;
 		}
 
 	}
